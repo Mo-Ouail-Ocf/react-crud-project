@@ -1,0 +1,77 @@
+-->create:
+
+
+const addItem = async (item)=>{
+  const id =  items.length ?  items[items.length-1].id+1 : 1
+  const theNewItem ={id,checked:false,item}
+  const ListItems = [...items,theNewItem]
+  setItems(ListItems)
+    /////////////////////
+  const postOptions ={
+    method:'POST',
+
+    headers:{
+        'Content-Type':'application/json'
+    },
+
+    body:JSON.stringify(theNewItem)
+  }
+
+  const result = await apiRequest(API_URL,postOptions)
+    /////////////////////
+  if(result) setFetchErr(result)
+}
+
+-->read:
+
+-->update:
+
+const handleCheck = async (id) => {
+  const listItems = items.map((item) => item.id === id ? { ...item, checked: !item.checked } : item);
+  setItems(listItems);
+  const myItem = listItems.filter(item=>item.id===id)
+  //////////////////////////////////
+  const updateOptions = {
+    method :'PATCH',
+    headers: {
+    'Content-Type':'application/json'
+    },
+    body :JSON.stringify({checked:myItem[0].checked})
+  }
+  const reqURL = `${API_URL}/${id}`
+  const result = await apiRequest(reqURL,updateOptions)
+  if (!result) setFetchErr(result)
+  //////////////////////////////////
+}
+
+-->delete:
+
+const handleDelete =async (id) => {
+  const listItems = items.filter((item) => item.id !== id);
+  setItems(listItems);
+  //////////////////////////////////
+  const deleteOptions = {method:'DELETE'}
+  const reqURL = `${API_URL}/${id} `
+  const result = await apiRequest(reqURL,deleteOptions)
+  if (!result) setFetchErr(result)
+  //////////////////////////////////
+}
+
+-->api request reutns the error message
+const apiRequest = async (url='',optionObj=null,errMsg= null)=>{
+    try {
+        const response = await fetch(url,optionObj)
+        if (!response.ok) {
+            throw Error("Please , reload the app")
+        }
+    } catch (err){
+        errMsg = err.message
+    } finally {
+        return errMsg 
+    }
+}
+
+export default apiRequest
+
+--it is used to send options : "POST" "DELETE" "PATCH"
+

@@ -1,0 +1,22 @@
+-->useState(state,setState)
+
+-->useRef()
+    const ref =useRef()
+    inside a component : 
+        <p ref={ref}> </p> //ref.cuurent will return the paragraph
+
+-->useEffect
+    useEffect (function ,[dependencies])
+    the function willl be executed only when the 
+    dependencies change
+
+-->useMemo()
+    const func = useMemo(function,[dependencies])
+     useMemo returns only data
+    -- Memoizes the result of a function to prevent unnecessary 
+       calculations during re-renders.
+-->useCallback()
+    useCallback like useMemo but it returns the Callback func
+    --Returns a memoized version of a callback function to prevent 
+      unnecessary re-renders.
+    
